@@ -1,0 +1,83 @@
+created: 20200817223512637
+creator: Rahul Kashyap
+modified: 20210516134112767
+modifier: Rahul Kashyap
+tags: NeutronStars StellarStructure
+title: TOV_Star
+tmap.id: 1cfc8309-d7a3-49e6-b8bd-bc7617bf0c72
+
+> GoogleDoc: {{TOV_solution_tests.docx}}
+
+> MATLAB code by Sebastiano as benchmarking the python code: https://bitbucket.org/bernuzzi/tov/src/master/ 
+
+;Derivation
+One of the most clear introduction to mathemtical underpinnings of general relativity was introduced by <<ref [[Wald 1974]]>> who has imposed a good level rigor on the community. 
+
+Assume the ansatz metric for a spherically symmetric system as 
+$$
+d s^{2}=-f(r) d t^{2}+h(r) d r^{2}+r^{2}\left(d \theta^{2}+\sin ^{2} \theta d \phi^{2}\right)
+$$
+
+For Schwarzschild metric, 
+$$
+f(r)=h(r)^{-1}=1-\frac{2M}{r}
+$$
+
+
+The energy momentum tensor for an ideal fluid is 
+$$ 
+T_{\mu \nu} = \rho_o \left(1+\frac{\epsilon}{c^2}+\frac{p}{\rho_o c^2}\right) u_\mu u_\nu +p g_{\mu\nu}
+$$
+
+Here, $$\epsilon$$ is energy per unit mass which includes kinetic as well as internal (thermal etc.) energy  and $$\rho_o\epsilon$$ is energy per unit volume. One can also define enthalpy per unit mass as $$h=\epsilon + p/\rho_o$$.
+
+> ''NOTE to avoid confusion: Sometimes the quantity, $$\rho_o(1+\epsilon/c^2)$$ is referred as energy density (rest mass and other forms of energy per unit volume) and denoted by $$\epsilon$$. '' 
+
+Put then in Einstein's equation, to obtain the set of equations which cann solved along with the equation of state to obtain the structure of star. A reasonable (not so accurate) assumption about EOS for neutron star is 
+$$
+p=K\rho^\gamma; \\
+K=1.982\times10^{-6} cgs, \gamma =2-3
+$$
+
+We also take $$f=e^{2\phi}$$ to make the analogy to Newtonian limit where $$\phi$$ becomes gravitational potential. In GR we impose the condition that $$\phi(r=R)=\frac{1}{2}\ln (1-\frac{2M}{R})$$ i.e. approaches Schwarzschild metric outside star. For this, we assume the density and pressure also drops to zero i.e. absence of energy momentum tensor. 
+
+;Basic equations
+$$
+\begin{aligned}
+\frac{dm}{dr} &= 4 \pi r^2 \rho_o (1+\epsilon/c^2) \\
+
+\frac{dp}{dr} &= -\frac{G\rho_o m}{r^2} \left( 1+\frac{\epsilon}{c^2}+\frac{p}{\rho_o c^2} \right) \left(1+\frac{4\pi p r^3}{m c^2}\right) \left(1 - \frac{2G m}{rc^2} \right)^{-1} \\
+
+\frac{d\phi}{dr} &= - \frac{G}{\rho_o}\frac{dp}{dr} \left( 1+\frac{\epsilon}{c^2}+\frac{p}{\rho_o c^2}     \right)^{-1}
+\end{aligned}
+$$
+
+Instead of pressure, specific enthalpy (per unit mass), $$h=\epsilon+p/\rho_o$$ can also be used as one of the variables in this system of ODE. 
+
+The quantity $$\rho_o(1+\epsilon/c^2)$$ is total mass with rest mass and mass equivalent of internal energy; referred to as `edens` in the python code to generate TOV star. 
+More details in (Sec.6.2,[[Wald 1984|General_Relativity_-_R._Wald.pdf]]); also the difference between proper mass and total mass energy of a star to compute the difference which is binding energy of the star. 
+
+The actual content of matter in the star is when the mass-energy is integrated with the proper differential volume known as ''baryonic mass'' as opposed to ''gravitational mass'' which is identified with the asymptotic limit of Newtonian concept of mass. 
+
+$$
+\textrm{Gravitational Mass: \,} 
+M_g = \int_0^R 4\pi r^2 \rho_o (1+\frac{\epsilon}{c^2}) dr \\
+
+\textrm{Baryonic Mass: \,}M_b = \int_0^R 4\pi r^2 \rho_o (1+\frac{\epsilon}{c^2}) \sqrt{-g} dr
+ = \int_0^R 4\pi r^2 \rho_o (1+\frac{\epsilon}{c^2}) \frac{1}{\sqrt{1-\frac{2GM}{rc^2}}} dr
+
+
+$$
+
+; Maximum mass limit 
+* for constant density star
+* with the minimal assumption 
+* with no assumption about EOS. 
+
+;Stability of TOV stars 
+check ''Chandrasekhar and Tooper 1964, Sorkin 1981'' for stability of stars. 
+
+!!!References
+
+;Code
+* Sebastiano Bernuzzi, Nagar and Damour -- https://bitbucket.org/bernuzzi/tov/src/master/ 
